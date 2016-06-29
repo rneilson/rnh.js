@@ -5,6 +5,14 @@
   "main": "dist/rnh.cjs.js",
   "jsnext:main": "dist/rnh.js",
   "scripts": {
+    "clean": "rm -rf dist/*",
+    "build:es6": "rollup -c -o dist/rnh.js",
+    "build:cjs": "rollup -c -f cjs -o dist/rnh.cjs.js",
+    "build:iife": "rollup -c -f iife -o dist/rnh.iife.js",
+    "postbuild:iife": "tools/strip.sh dist/rnh.iife.js",
+    "prebuild": "npm run clean -s",
+    "build": "npm run build:es6 && npm run build:cjs && npm run build:iife",
+    "postinstall": "mkdir dist && npm run build",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Raymond Neilson <rneilson@interloper.ca> (https://github.com/rneilson)",

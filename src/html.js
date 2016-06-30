@@ -1,5 +1,6 @@
 import { isCallable, strLike, nodeLike } from './utils.js';
 import { id } from './select.js';
+import { addcls } from './classes.js';
 
 /* HTMLElement creation, append/remove of children */
 
@@ -29,7 +30,7 @@ function h (tag, ...args) {
 		// Add classes
 		else if ('string' === typeof arg) {
 			if (el.className) {
-				el.className += ' ' + arg;
+				addcls(el, arg);
 			}
 			else {
 				el.className = arg;

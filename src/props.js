@@ -1,3 +1,40 @@
+import { isCallable } from './utils.js';
+
+/* Attribute/property setting */
+
+function setprops (el, props) {
+	if ('object' === typeof props) {
+		for (let p of Object.keys(props)) {
+			// Add as listener if prop value is a function
+			if (isCallable(props[p])) {
+				el.addEventListener(p, props[p]);
+			}
+			// Otherwise add as property/attribute/style
+			else {
+				// Special handling for style
+				if (p === 'style') {
+					let j = props[p];
+					if ('string' === typeof j) {
+						el.style.cssText = j;
+					}
+					else if ('object' === typeof j) {
+						for (let k of Object.keys(j)) {
+							el.style.setProperty(k, j[k]);
+						}
+					}
+				}
+				// Special handling for data-* attributes
+				else if ('string' === typeof p && p.substr(0, 5) === 'data-') {
+					el.setAttribute(p, props[p]);
+				}
+				else {
+					el[p] = props[p];
+				}
+			}
+		}
+	}
+}
+
 /* Class addition/removal */
 
 // Adds given class(es) to element
@@ -64,4 +101,4 @@ function togcls(el, cls) {
 	}
 }
 
-export { addcls, remcls, togcls };
+export { setprops, addcls, remcls, togcls };

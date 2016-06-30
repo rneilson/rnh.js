@@ -1,6 +1,6 @@
 import { isCallable, strLike, nodeLike } from './utils.js';
 import { id } from './select.js';
-import { addcls } from './classes.js';
+import { setprops, addcls } from './props.js';
 
 /* HTMLElement creation, append/remove of children */
 
@@ -42,34 +42,7 @@ function h (tag, ...args) {
 		}
 		// Add properties/listeners
 		else if ('object' === typeof arg) {
-			for (let p of Object.keys(arg)) {
-				// Add as listener if prop value is a function
-				if (isCallable(arg[p])) {
-					el.addEventListener(p, arg[p]);
-				}
-				// Otherwise add as property/attribute/style
-				else {
-					// Special handling for style
-					if (p === 'style') {
-						let j = arg[p];
-						if ('string' === typeof j) {
-							el.style.cssText = j;
-						}
-						else if ('object' === typeof j) {
-							for (let k of j) {
-								el.style.setProperty(k, j[k]);
-							}
-						}
-					}
-					// Special handling for data-* attributes
-					else if ('string' === typeof p && p.substr(0, 5) === 'data-') {
-						el.setAttribute(p, arg[p]);
-					}
-					else {
-						el[p] = arg[p];
-					}
-				}
-			}
+			setprops(el, arg);
 		}
 	}
 

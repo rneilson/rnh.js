@@ -1,4 +1,4 @@
-import { isCallable, strLike } from './utils.js';
+import { isCallable, strLike, nodeLike } from './utils.js';
 import { id } from './select.js';
 
 /* HTMLElement creation, append/remove of children */
@@ -6,10 +6,11 @@ import { id } from './select.js';
 // Creates HTMLElement
 // Params:
 // 	tag			string				Element tag to create (default 'div')
-// 	classes		array, string		Class list to set on element
+// Additional params by type:
+// 	classes		string				Class or class list to set on element (multiple args will be concantenated)
 // 	props		object				Properties to set on element; functions will be added as event listeners	 
-// 	children	array, stringish	Child nodes to insert; stringish will be added as a plain text node
-function h (tag, classes, props, children) {
+// 	children	array, element		Child nodes to insert; argument passed to addchd()
+function h (tag, ...args) {
 	var el;
 
 	// Create element
@@ -20,31 +21,55 @@ function h (tag, classes, props, children) {
 		el = document.createElement('div');
 	}
 
-	// Add classes
-	if (classes !== undefined && classes !== null) {
-		if ('string' === typeof classes) {
-			el.className = classes;
-		}
-		else if (Array.isArray(classes)) {
-			el.className = classes.join(' ');
-		}
-	}
-
-	// Add properties/listeners
-	if (props !== undefined && props !== null && 'object' === typeof props) {
-		for (var p in props) {
-			if (isCallable(props[p])) {
-				el.addEventListener(p, props[p]);
+	// Parse add'l args
+	for (let arg of args) {
+		// Guard
+		if (arg === null || arg === undefined)
+			;
+		// Add classes
+		else if ('string' === typeof arg) {
+			if (el.className) {
+				el.className += ' ' + arg;
 			}
 			else {
-				el[p] = props[p];
+				el.className = arg;
 			}
 		}
-	}
-
-	// Add children
-	if (children !== undefined && children !== null) {
-		addchd(el, children);
+		// Add children
+		else if (Array.isArray(arg) || nodeLike(arg)) {
+			addchd(el, arg);
+		}
+		// Add properties/listeners
+		else if ('object' === typeof arg) {
+			for (let p of Object.keys(arg)) {
+				// Add as listener if prop value is a function
+				if (isCallable(arg[p])) {
+					el.addEventListener(p, arg[p]);
+				}
+				// Otherwise add as property/attribute/style
+				else {
+					// Special handling for style
+					if (p === 'style') {
+						let j = arg[p];
+						if ('string' === typeof j) {
+							el.style.cssText = j;
+						}
+						else if ('object' === typeof j) {
+							for (let k of j) {
+								el.style.setProperty(k, j[k]);
+							}
+						}
+					}
+					// Special handling for data-* attributes
+					else if ('string' === typeof p && p.substr(0, 5) === 'data-') {
+						el.setAttribute(p, arg[p]);
+					}
+					else {
+						el[p] = arg[p];
+					}
+				}
+			}
+		}
 	}
 
 	return el;
@@ -88,8 +113,8 @@ function addchd (el, children, detach) {
 
 	// Add children
 	if (Array.isArray(children)) {
-		for (var i = 0, len_i = children.length; i < len_i; i++) {
-			var child = children[i];
+		for (let i = 0, len_i = children.length; i < len_i; i++) {
+			let child = children[i];
 			if (strLike(child)) {
 				el.appendChild(t(child));
 			}
@@ -100,6 +125,9 @@ function addchd (el, children, detach) {
 	}
 	else if (strLike(children)) {
 		el.appendChild(t(children));
+	}
+	else if (nodeLike(children)) {
+		el.appendChild(children);
 	}
 
 	// Reattach if previously detached
@@ -127,8 +155,8 @@ function remchd (el, children, detach) {
 
 	// Remove children
 	if (Array.isArray(children)) {
-		for (var i = 0, len_i = children.length; i < len_i; i++) {
-			var child = children[i];
+		for (let i = 0, len_i = children.length; i < len_i; i++) {
+			let child = children[i];
 			if (strLike(child)) {
 				el.removeChild(id(child));
 			}
@@ -178,28 +206,28 @@ function clrchd (el, detach) {
 
 /* Common shortcuts */
 
-function a (classes, props, children) {
-	return h('a', classes, props, children);
+function a (...args) {
+	return h('a', ...args);
 }
 
-function p (classes, props, children) {
-	return h('p', classes, props, children);
+function p (...args) {
+	return h('p', ...args);
 }
 
-function div (classes, props, children) {
-	return h('div', classes, props, children);
+function div (...args) {
+	return h('div', ...args);
 }
 
-function span (classes, props, children) {
-	return h('span', classes, props, children);
+function span (...args) {
+	return h('span', ...args);
 }
 
-function ul (classes, props, children) {
-	return h('ul', classes, props, children);
+function ul (...args) {
+	return h('ul', ...args);
 }
 
-function li (classes, props, children) {
-	return h('li', classes, props, children);
+function li (...args) {
+	return h('li', ...args);
 }
 
 export { h, t, c, b, addchd, remchd, clrchd, a, p, div, span, ul, li };

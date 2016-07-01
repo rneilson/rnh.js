@@ -11,8 +11,12 @@ function setprops (el, props) {
 			}
 			// Otherwise add as property/attribute/style
 			else {
+				// Forward class to addcls()
+				if (p === 'class') {
+					addcls(el, props[p]);
+				}
 				// Special handling for style
-				if (p === 'style') {
+				else if (p === 'style') {
 					let j = props[p];
 					if ('string' === typeof j) {
 						el.style.cssText = j;

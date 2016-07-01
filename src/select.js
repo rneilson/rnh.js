@@ -1,9 +1,5 @@
 /* Element selector shortcuts */
 
-function id (i) {
-	return document.getElementById(i);
-}
-
 function sel (s, l) {
 	if (l === undefined) {
 		return document.querySelectorAll(s);
@@ -13,7 +9,11 @@ function sel (s, l) {
 	}
 }
 
-function cls (c, l) {
+function byid (i) {
+	return document.getElementById(i);
+}
+
+function bycls (c, l) {
 	if (l === undefined) {
 		return document.getElementsByClassName(c);
 	}
@@ -22,7 +22,7 @@ function cls (c, l) {
 	}
 }
 
-function tag (t, l) {
+function bytag (t, l) {
 	if (l === undefined) {
 		return document.getElementsByTagName(t);
 	}
@@ -31,4 +31,4 @@ function tag (t, l) {
 	}
 }
 
-export { id, sel, cls, tag };
+export { sel, byid, bycls, bytag };

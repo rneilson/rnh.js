@@ -1,5 +1,5 @@
 import { isCallable, strLike, nodeLike } from './utils.js';
-import { id } from './select.js';
+import { byid } from './select.js';
 import { setprops, addcls } from './props.js';
 
 /* HTMLElement creation, append/remove of children */
@@ -47,27 +47,6 @@ function h (tag, ...args) {
 	}
 
 	return el;
-}
-
-// Creates text element
-// Params:
-// 	str			stringish			Content of text node to create
-function t (str) {
-	var s = str === undefined ? '' : str === null ? '' : 'string' === typeof str ? str : String(str);
-	return document.createTextNode(s);
-}
-
-// Creates comment element
-// Params:
-// 	str			stringish			Content of comment node to create
-function c (str) {
-	var s = str === undefined ? '' : str === null ? '' : 'string' === typeof str ? str : String(str);
-	return document.createComment(s);
-}
-
-// Creates <br> element
-function b () {
-	return document.createElement('br');
 }
 
 // Appends one or more child elements to given element
@@ -132,7 +111,7 @@ function remchd (el, children, detach) {
 		for (let i = 0, len_i = children.length; i < len_i; i++) {
 			let child = children[i];
 			if (strLike(child)) {
-				el.removeChild(id(child));
+				el.removeChild(byid(child));
 			}
 			else {
 				el.removeChild(child);
@@ -140,7 +119,7 @@ function remchd (el, children, detach) {
 		}
 	}
 	else if (strLike(children)) {
-		el.removeChild(id(children));
+		el.removeChild(byid(children));
 	}
 
 	// Reattach if previously detached
@@ -180,6 +159,27 @@ function clrchd (el, detach) {
 
 /* Common shortcuts */
 
+// Creates text element
+// Params:
+// 	str			stringish			Content of text node to create
+function t (str) {
+	var s = str === undefined ? '' : str === null ? '' : 'string' === typeof str ? str : String(str);
+	return document.createTextNode(s);
+}
+
+// Creates comment element
+// Params:
+// 	str			stringish			Content of comment node to create
+function c (str) {
+	var s = str === undefined ? '' : str === null ? '' : 'string' === typeof str ? str : String(str);
+	return document.createComment(s);
+}
+
+// Creates <br> element
+function br () {
+	return document.createElement('br');
+}
+
 function a (...args) {
 	return h('a', ...args);
 }
@@ -204,4 +204,4 @@ function li (...args) {
 	return h('li', ...args);
 }
 
-export { h, t, c, b, addchd, remchd, clrchd, a, p, div, span, ul, li };
+export { h, addchd, remchd, clrchd, t, c, br, a, p, div, span, ul, li };

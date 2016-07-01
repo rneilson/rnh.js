@@ -177,6 +177,34 @@ function brklns (str) {
 	return ret;
 }
 
+// Converts/splits template string into array of elements, including converting \n to <br>
+// Inserted expressions will be called if a function, inserted directly if a node, or converted to text otherwise
+function txt (strings, ...inserts) {
+	var ret = [];
+	if (strings.length > 0) {
+		// Add first text node
+		ret.push(...brklns(strings[0]));
+		// Alternate inserts and additional text nodes
+		for (var i = 1; i < strings.length; i++) {
+			let insert = inserts[i-1];
+			if (nodeLike(insert)) {
+				ret.push(insert);
+			}
+			else if (isCallable(insert)) {
+				ret.push(insert());
+			}
+			else if (strLike(insert)) {
+				ret.push(...brklns(insert));
+			}
+			else {
+				ret.push(t(String(insert)));
+			}
+			ret.push(...brklns(strings[i]));
+		}
+	}
+	return ret;
+}
+
 /* Common shortcuts */
 
 // Creates text element
@@ -224,4 +252,4 @@ function li (...args) {
 	return h('li', ...args);
 }
 
-export { h, addchd, remchd, clrchd, brklns, t, c, br, a, p, div, span, ul, li };
+export { h, addchd, remchd, clrchd, brklns, txt, t, c, br, a, p, div, span, ul, li };

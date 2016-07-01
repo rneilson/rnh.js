@@ -157,6 +157,26 @@ function clrchd (el, detach) {
 	return el;
 }
 
+/* String/text conversion into element arrays */
+
+// Splits string on newlines, converts to text nodes, and inserts <br> elements; returns array of nodes
+// Params:
+// 	str			string				String to parse
+function brklns (str) {
+	var ret = [];
+	var arr = str.split('\n');
+	if (arr.length > 0) {
+		// Add first text node
+		ret.push(t(arr[0]));
+		// Add subsequent text nodes, with <br> elements between
+		for (var i = 1; i < arr.length; i++) {
+			ret.push(br());
+			ret.push(t(arr[i]));
+		}
+	}
+	return ret;
+}
+
 /* Common shortcuts */
 
 // Creates text element
@@ -204,4 +224,4 @@ function li (...args) {
 	return h('li', ...args);
 }
 
-export { h, addchd, remchd, clrchd, t, c, br, a, p, div, span, ul, li };
+export { h, addchd, remchd, clrchd, brklns, t, c, br, a, p, div, span, ul, li };

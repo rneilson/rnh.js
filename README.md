@@ -53,7 +53,7 @@ Additional arguments:
 | array, element | Child nodes to insert; argument(s) passed to `addchd()` |
 
 Example:
-```
+```javascript
 import * from 'rnh';
 
 var ex = h('div', {id: 'main', class: 'main'},

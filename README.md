@@ -64,9 +64,18 @@ var ex = h('div', {id: 'main', class: 'main'},
 );
 
 /*
-Output (ex.outerHTML):
+Output (ex.outerHTML, indentation added for clarity):
 
-<div id="main" class="main"><p class="big"><span style="color: red;">This</span>is the first line.<br>This is the second.</p><p class="small">Also, strings within an array<br>are converted to text nodes.</p></div>
+<div id="main" class="main">
+	<p class="big">
+		<span style="color: red;">This</span>is the first line.<br>
+		This is the second.
+	</p>
+	<p class="small">
+		Also, strings within an array<br>
+		are converted to text nodes.
+	</p>
+</div>
 */
 ```
 
@@ -113,6 +122,14 @@ Equivalent to `h('ul', ...args)`.
 #### `li (...args)`
 
 Equivalent to `h('li', ...args)`.
+
+#### `em (...args)`
+
+Equivalent to `h('em', ...args)`.
+
+#### `strong (...args)`
+
+Equivalent to `h('strong', ...args)`.
 
 ## Element child manipulation
 
@@ -245,4 +262,18 @@ Selects elements using browser-native `getElementsByTagName()`.
 | ----- | ---- | ---- |
 | t | string | Tag name |
 | l | Element | Root element to search (optional) |
+
+## Miscellaneous utilities
+
+#### `isCallable (fn)`
+Returns `true` if `fn` is a function or function object.
+
+#### `hasProp (obj, prop)`
+Returns `true` if `obj` has own property `prop`.
+
+#### `strLike (s)`
+Returns `true` if `s` is a string, number, boolean, Date, or RegExp.
+
+#### `nodeLike (n)`
+Returns `true` if `n` is not falsy, and has non-falsy properties `nodeName` and `nodeType`.
 

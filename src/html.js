@@ -252,4 +252,12 @@ function li (...args) {
 	return h('li', ...args);
 }
 
-export { h, addchd, remchd, clrchd, brklns, txt, t, c, br, a, p, div, span, ul, li };
+function em (...args) {
+	return h('em', ...args);
+}
+
+function strong (...args) {
+	return h('strong', ...args);
+}
+
+export { h, addchd, remchd, clrchd, brklns, txt, t, c, br, a, p, div, span, ul, li, em, strong };

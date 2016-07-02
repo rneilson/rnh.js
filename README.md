@@ -39,12 +39,13 @@ Three library versions are available depending on use:
 
 Creates an HTMLElement node.
 
-| Params |
-| ------ |
+| Param | Type | Desc |
+| ----- | ---- | ---- |
 | tag | string | Element tag to create (default 'div') |
 
-| Additional params by type |
-| ------ |
+Additional arguments:
+| Type | Desc |
+| ---- | ---- |
 | string | Class or class list to set on element (multiple args will be concantenated) |
 | object | Properties/attributes to set on element; functions will be added as event listeners |
 | array, element | Child nodes to insert; argument(s) passed to addchd() |
@@ -53,8 +54,8 @@ Creates an HTMLElement node.
 
 Appends one or more child elements to given element.
 
-| Params |
-| ------ |
+| Param | Type | Desc |
+| ----- | ---- | ---- |
 | el | Element | Element to append child(ren) to |
 | children | array, stringish | Child(ren) to append; stringish (includes string, number, boolean) will be added as text nodes |
 | detach | boolean | Detach element from DOM before appending child(ren) |
@@ -63,8 +64,8 @@ Appends one or more child elements to given element.
 
 Removes one or more child elements from given element.
 
-| Params |
-| ------ |
+| Param | Type | Desc |
+| ----- | ---- | ---- |
 | el | Element | Element to remove child(ren) from |
 | children | array, stringish | Child(ren) to remove; stringish will be selected by id |
 | detach | boolean | Detach element from DOM before appending child(ren) |
@@ -73,8 +74,8 @@ Removes one or more child elements from given element.
 
 Removes all child elements from given element.
 
-| Params |
-| ------ |
+| Param | Type | Desc |
+| ----- | ---- | ---- |
 | el | Element | Element to remove child(ren) from |
 | detach | boolean | Detach element from DOM before appending child(ren) |
 
@@ -82,8 +83,8 @@ Removes all child elements from given element.
 
 Splits string on newlines, converts to text nodes, and inserts `<br>` elements in place of '\n'; returns array of nodes.
 
-| Params |
-| ------ |
+| Param | Type | Desc |
+| ----- | ---- | ---- |
 | str | string | String to parse |
 
 `txt (strings, ...inserts)`
@@ -101,16 +102,16 @@ var arr = rnh.txt`This is a ${str}, which will be converted\nto an array of DOM 
 
 Creates text node.
 
-| Params |
-| ------ |
+| Param | Type | Desc |
+| ----- | ---- | ---- |
 | str | stringish | Content of text node to create |
 
 `c (str)`
 
 Creates comment node.
 
-| Params |
-| ------ |
+| Param | Type | Desc |
+| ----- | ---- | ---- |
 | str | stringish | Content of comment node to create |
 
 `br ()`

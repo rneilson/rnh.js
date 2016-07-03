@@ -17,6 +17,13 @@
   },
   "author": "Raymond Neilson <rneilson@interloper.ca> (https://github.com/rneilson)",
   "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/rneilson/rnh.js.git"
+  },
+  "engines": {
+    "node": ">=6.0"
+  },
   "devDependencies": {
     "rollup": "^0.33.0"
   }

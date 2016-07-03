@@ -85,7 +85,7 @@ Creates text node.
 
 | Param | Type | Desc |
 | ----- | ---- | ---- |
-| str | stringish | Content of text node to create |
+| str | stringlike | Content of text node to create |
 
 #### `c (str)`
 
@@ -93,7 +93,7 @@ Creates comment node.
 
 | Param | Type | Desc |
 | ----- | ---- | ---- |
-| str | stringish | Content of comment node to create |
+| str | stringlike | Content of comment node to create |
 
 #### `br ()`
 
@@ -140,7 +140,7 @@ Appends one or more child elements to given element.
 | Param | Type | Desc |
 | ----- | ---- | ---- |
 | el | Element | Element to append child(ren) to |
-| children | array, stringish | Child(ren) to append; stringish (includes string, number, boolean) will be added as text nodes |
+| children | array, stringlike | Child(ren) to append; stringlike (see `strLike()`) will be added as text nodes |
 | detach | boolean | Detach element from DOM before appending child(ren) |
 
 #### `remchd (el, children, detach)`
@@ -150,7 +150,7 @@ Removes one or more child elements from given element.
 | Param | Type | Desc |
 | ----- | ---- | ---- |
 | el | Element | Element to remove child(ren) from |
-| children | array, stringish | Child(ren) to remove; stringish will be selected by id |
+| children | array, stringlike | Child(ren) to remove; stringlike will be selected by id |
 | detach | boolean | Detach element from DOM before appending child(ren) |
 
 #### `clrchd (el, detach)`
@@ -196,6 +196,7 @@ Some properties have special processing:
 - `class`: value will be passed to `addcls()`
 - `style`: a string value will set `el.style.cssText` to given value; an object value will set each property using `setProperty()`
 - any property with a function as its value will be added as an event listener, with the key as the event
+- any property beginning with 'data-' will be added as an attribute of the element instead of a property
 
 #### `addcls(el, cls)`
 

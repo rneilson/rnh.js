@@ -1,6 +1,6 @@
 {
   "name": "rnh",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "Hyperscript-like HTMLElement creation, selection, and manipulation",
   "main": "dist/rnh.cjs.js",
   "jsnext:main": "dist/rnh.js",
@@ -24,7 +24,7 @@
   "engines": {
     "node": ">=6.0"
   },
-  "devDependencies": {
+  "dependencies": {
     "rollup": "^0.33.0"
   }
 }

@@ -51,9 +51,9 @@ function h (tag, ...args) {
 
 // Appends one or more child elements to given element
 // Params:
-// 	el			Node				Node to append child(ren) to
-// 	children	array, stringish	Child(ren) to append; stringish will be added as text nodes
-// 	detach		boolean				Detach element from DOM before appending child(ren)
+// 	el			Node					Node to append child(ren) to
+// 	children	array, stringish, Node	Child(ren) to append; stringish will be added as text nodes
+// 	detach		boolean					Detach element from DOM before appending child(ren)
 function addchd (el, children, detach) {
 	var temp = null;
 
@@ -71,16 +71,16 @@ function addchd (el, children, detach) {
 			if (strLike(child)) {
 				el.appendChild(t(child));
 			}
-			else {
+			else if (nodeLike(child)) {
 				el.appendChild(child);
 			}
 		}
 	}
-	else if (strLike(children)) {
-		el.appendChild(t(children));
-	}
 	else if (nodeLike(children)) {
 		el.appendChild(children);
+	}
+	else if (strLike(children)) {
+		el.appendChild(t(children));
 	}
 
 	// Reattach if previously detached
@@ -93,9 +93,9 @@ function addchd (el, children, detach) {
 
 // Removes one or more child elements from given element
 // Params:
-// 	el			Node				Node to remove child(ren) from
-// 	children	array, stringish	Child(ren) to remove; stringish will be selected by id
-// 	detach		boolean				Detach element from DOM before appending child(ren)
+// 	el			Node					Node to remove child(ren) from
+// 	children	array, stringish, Node	Child(ren) to remove; stringish will be selected by id
+// 	detach		boolean					Detach element from DOM before appending child(ren)
 function remchd (el, children, detach) {
 	var temp = null;
 
@@ -113,10 +113,13 @@ function remchd (el, children, detach) {
 			if (strLike(child)) {
 				el.removeChild(byid(child));
 			}
-			else {
+			else if (nodeLike(child)) {
 				el.removeChild(child);
 			}
 		}
+	}
+	else if (nodeLike(children)) {
+		el.removeChild(children);
 	}
 	else if (strLike(children)) {
 		el.removeChild(byid(children));

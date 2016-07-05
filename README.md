@@ -151,7 +151,7 @@ Removes one or more child elements from given element.
 | ----- | ---- | ---- |
 | el | Element | Element to remove child(ren) from |
 | children | array, stringlike, Node | Child(ren) to remove; stringlike will be selected by id |
-| detach | boolean | Detach element from DOM before appending child(ren) |
+| detach | boolean | Detach element from DOM before removing child(ren) |
 
 #### `clrchd (el, detach)`
 
@@ -160,7 +160,7 @@ Removes all child elements from given element.
 | Param | Type | Desc |
 | ----- | ---- | ---- |
 | el | Element | Element to remove child(ren) from |
-| detach | boolean | Detach element from DOM before appending child(ren) |
+| detach | boolean | Detach element from DOM before removing children |
 
 ## Text to node conversion
 

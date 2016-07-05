@@ -102,7 +102,7 @@ function remchd (el, children, detach) {
 	// Optionally detach element from DOM
 	if (detach && el.parentNode !== null) {
 		// Comment node as placeholder in the DOM
-		temp = document.createComment();
+		temp = c();
 		el.parentNode.replaceChild(temp, el);
 	}
 
@@ -136,14 +136,14 @@ function remchd (el, children, detach) {
 // Removes all child elements from given element
 // Params:
 // 	el			Node				Node to remove child(ren) from
-// 	detach		boolean				Detach element from DOM before appending child(ren)
+// 	detach		boolean				Detach element from DOM before removing children
 function clrchd (el, detach) {
 	var temp = null;
 
 	// Optionally detach element from DOM
 	if (detach && el.parentNode !== null) {
 		// Comment node as placeholder in the DOM
-		temp = document.createComment();
+		temp = c();
 		el.parentNode.replaceChild(temp, el);
 	}
 

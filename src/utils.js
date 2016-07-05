@@ -8,6 +8,10 @@ export function hasProp (obj, prop) {
 	return Object.prototype.hasOwnProperty.call(obj, prop);
 }
 
+export function makeStr (s) {
+	return str === undefined ? '' : str === null ? '' : 'string' === typeof str ? str : String(str);
+}
+
 export function strLike (s) {
 	var type = typeof s;
 	return type === 'string' || type === 'number' || type === 'boolean' || s instanceof Date || s instanceof RegExp;

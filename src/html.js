@@ -1,4 +1,4 @@
-import { isCallable, strLike, nodeLike } from './utils.js';
+import { isCallable, makeStr, strLike, nodeLike } from './utils.js';
 import { byid } from './select.js';
 import { setprops, addcls } from './props.js';
 
@@ -164,7 +164,7 @@ function clrchd (el, detach) {
 // 	str			string				String to parse
 function brklns (str) {
 	var ret = [];
-	var arr = str.split('\n');
+	var arr = makeStr(str).split('\n');
 	if (arr.length > 0) {
 		// Add first text node
 		ret.push(t(arr[0]));
@@ -211,16 +211,14 @@ function txt (strings, ...inserts) {
 // Params:
 // 	str			stringish			Content of text node to create
 function t (str) {
-	var s = str === undefined ? '' : str === null ? '' : 'string' === typeof str ? str : String(str);
-	return document.createTextNode(s);
+	return document.createTextNode(makeStr(str));
 }
 
 // Creates comment element
 // Params:
 // 	str			stringish			Content of comment node to create
 function c (str) {
-	var s = str === undefined ? '' : str === null ? '' : 'string' === typeof str ? str : String(str);
-	return document.createComment(s);
+	return document.createComment(makeStr(str));
 }
 
 // Creates <br> element

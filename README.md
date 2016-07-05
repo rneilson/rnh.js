@@ -62,10 +62,11 @@ var ex = h('div', {id: 'main', class: 'main'},
 	h('p', 'small',
 		[ 'Also, strings within an array', br(), 'are converted to text nodes.' ])
 );
+```
 
-/*
 Output (ex.outerHTML, indentation added for clarity):
 
+```html
 <div id="main" class="main">
 	<p class="big">
 		<span style="color: red;">This</span>is the first line.<br>
@@ -76,12 +77,11 @@ Output (ex.outerHTML, indentation added for clarity):
 		are converted to text nodes.
 	</p>
 </div>
-*/
 ```
 
 #### `t (str)`
 
-Creates text node.
+Creates text node. `null` and `undefined` will be converted into the empty string. Other non-string types will be cast using `String()`.
 
 | Param | Type | Desc |
 | ----- | ---- | ---- |
@@ -89,7 +89,7 @@ Creates text node.
 
 #### `c (str)`
 
-Creates comment node.
+Creates comment node. `null` and `undefined` will be converted into the empty string. Other non-string types will be cast using `String()`.
 
 | Param | Type | Desc |
 | ----- | ---- | ---- |
@@ -140,7 +140,7 @@ Appends one or more child elements to given element.
 | Param | Type | Desc |
 | ----- | ---- | ---- |
 | el | Element | Element to append child(ren) to |
-| children | array, stringlike | Child(ren) to append; stringlike (see `strLike()`) will be added as text nodes |
+| children | array, stringlike, Node | Child(ren) to append; stringlike (see `strLike()`) will be added as text nodes |
 | detach | boolean | Detach element from DOM before appending child(ren) |
 
 #### `remchd (el, children, detach)`
@@ -150,7 +150,7 @@ Removes one or more child elements from given element.
 | Param | Type | Desc |
 | ----- | ---- | ---- |
 | el | Element | Element to remove child(ren) from |
-| children | array, stringlike | Child(ren) to remove; stringlike will be selected by id |
+| children | array, stringlike, Node | Child(ren) to remove; stringlike will be selected by id |
 | detach | boolean | Detach element from DOM before appending child(ren) |
 
 #### `clrchd (el, detach)`
@@ -166,7 +166,7 @@ Removes all child elements from given element.
 
 #### `brklns (str)`
 
-Splits string on newlines, converts to text nodes, and inserts `<br>` elements in place of '\n'; returns array of nodes.
+Splits string on newlines, converts to text nodes, and inserts `<br>` elements in place of '\n'; returns array of nodes. `null` and `undefined` will be converted into the empty string. Other non-string types will be cast using `String()`.
 
 | Param | Type | Desc |
 | ----- | ---- | ---- |

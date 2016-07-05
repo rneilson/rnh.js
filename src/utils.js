@@ -9,7 +9,7 @@ export function hasProp (obj, prop) {
 }
 
 export function makeStr (s) {
-	return str === undefined ? '' : str === null ? '' : 'string' === typeof str ? str : String(str);
+	return s === undefined ? '' : s === null ? '' : typeof s === 'string' ? s : String(s);
 }
 
 export function strLike (s) {

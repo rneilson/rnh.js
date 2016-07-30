@@ -208,6 +208,67 @@ function txt (strings, ...inserts) {
 	return ret;
 }
 
+// Converts HTML (in string template form) into array of nodes
+// Does *not* insert <br> elements on newlines
+// NOTE: elements received as insert args are converted to text during processing
+function html (strings, ...inserts) {
+
+	// Converts insert arg to string
+	function parse (insert) {
+		if (nodeLike(insert)) {
+			// Return as HTML if available
+			if (insert.outerHTML) {
+				return insert.outerHTML;
+			}
+			// Return raw text if text node
+			else if (insert.nodeType == 3) {
+				return insert.textContent;
+			}
+			// Return commented text if comment node
+			else if (insert.nodeType == 8) {
+				return `<!--${insert.textContent}-->`;
+			}
+			// TODO: handle DocumentFragment nodes (recursive calls on children?)
+			// Default to empty string
+			return '';
+		}
+		else if (isCallable(insert)) {
+			return parse(insert());
+		}
+		else if (strLike(insert)) {
+			return insert;
+		}
+		else {
+			return String(insert);
+		}
+	}
+
+	// Convert all to concatenated HTML string
+	var str = '';
+	if (strings.length > 0) {
+		// Add first text node
+		str += strings[0];
+		// Alternate inserts and additional text nodes
+		for (let i = 1; i < strings.length; i++) {
+			let insert = inserts[i-1];
+			str += parse(insert);
+			str += strings[i];
+		}
+	}
+
+	// Create temp div and set HTML string to innerHTML
+	var tmp = h('div');
+	tmp.innerHTML = str;
+
+	// Return temp div children as array
+	var ret = [];
+	for (let j = 0, chd = tmp.childNodes; j < chd.length; j++) {
+		ret.push(chd[j]);
+	}
+
+	return ret;
+}
+
 /* Common shortcuts */
 
 // Creates text element
@@ -281,4 +342,4 @@ function textarea (...args) {
 	return h('textarea', ...args);
 }
 
-export { h, addchd, remchd, clrchd, brklns, txt, t, c, br, a, p, div, span, ul, li, em, strong, img, pre, input, select, textarea };
+export { h, addchd, remchd, clrchd, brklns, txt, html, t, c, br, a, p, div, span, ul, li, em, strong, img, pre, input, select, textarea };

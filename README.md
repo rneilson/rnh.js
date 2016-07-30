@@ -131,6 +131,26 @@ Equivalent to `h('em', ...args)`.
 
 Equivalent to `h('strong', ...args)`.
 
+#### `img (...args)`
+
+Equivalent to `h('img', ...args)`.
+
+#### `pre (...args)`
+
+Equivalent to `h('pre', ...args)`.
+
+#### `input (...args)`
+
+Equivalent to `h('input', ...args)`.
+
+#### `select (...args)`
+
+Equivalent to `h('select', ...args)`.
+
+#### `textarea (...args)`
+
+Equivalent to `h('textarea', ...args)`.
+
 ## Element child manipulation
 
 #### `addchd (el, children, detach)`
@@ -181,6 +201,17 @@ var arr = rnh.txt`This is a ${str}, which will be converted\nto an array of DOM 
 // Result:		[ text, text, text, br, text ]
 // Contents:	[ 'This is a ', 'string', ', which will be converted', <br>, 'to an array of DOM nodes.' ]
 // (Please note the strings above represent text nodes, not strings.)
+```
+
+#### `html (strings, ...inserts)`
+
+Converts/splits template string into array of elements/nodes, including converting HTML where applicable. Inserted expressions will be called if a function, inserted according to outerHTML property if a node, or converted to text otherwise. Please note that this function is for use with template strings instead of direct calls. Also note that all inserted expressions are converted to text form during processing, which is inefficient when inserting HTMLElement objects directly.
+```javascript
+var str = 'string';
+var arr = rnh.html`This is a <span>${str}</span>, which will be converted<br>to an array of DOM nodes.`;
+// Result:		[ text, span, text, br, text ]
+// Contents:	[ 'This is a ', '<span>string</span>', ', which will be converted', <br>, 'to an array of DOM nodes.' ]
+// (Please note the strings above represent elements or text nodes, not strings.)
 ```
 
 ## Element property/attribute manipulation

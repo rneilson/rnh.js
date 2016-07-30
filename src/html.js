@@ -261,4 +261,24 @@ function strong (...args) {
 	return h('strong', ...args);
 }
 
-export { h, addchd, remchd, clrchd, brklns, txt, t, c, br, a, p, div, span, ul, li, em, strong };
+function img (...args) {
+	return h('img', ...args);
+}
+
+function pre (...args) {
+	return h('pre', ...args);
+}
+
+function input (...args) {
+	return h('input', ...args);
+}
+
+function select (...args) {
+	return h('select', ...args);
+}
+
+function textarea (...args) {
+	return h('textarea', ...args);
+}
+
+export { h, addchd, remchd, clrchd, brklns, txt, t, c, br, a, p, div, span, ul, li, em, strong, img, pre, input, select, textarea };

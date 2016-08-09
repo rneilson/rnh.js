@@ -54,8 +54,10 @@ function h (tag, ...args) {
 // 	el			Node					Node to replace
 // 	newel		Node					Node to replace with
 function replace (el, newel) {
-	el.parentNode.replaceChild(newel, el);
-	return newel;
+	if (el.parentNode) {
+		el.parentNode.replaceChild(newel, el);
+	}
+	return el;
 }
 
 // Appends one or more child elements to given element

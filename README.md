@@ -151,36 +151,45 @@ Equivalent to `h('select', ...args)`.
 
 Equivalent to `h('textarea', ...args)`.
 
-## Element child manipulation
+## Element/node child manipulation
+
+#### `replace (el, newel)`
+
+Replaces one node with another. Returns `el`.
+
+| Param | Type | Desc |
+| ----- | ---- | ---- |
+| el | Node | Node to replace |
+| newel | Node | Node to replace with |
 
 #### `addchd (el, children, detach)`
 
-Appends one or more child elements to given element.
+Appends one or more child nodes to given node. Returns `el`.
 
 | Param | Type | Desc |
 | ----- | ---- | ---- |
-| el | Element | Element to append child(ren) to |
+| el | Node | Node to append child(ren) to |
 | children | array, stringlike, Node | Child(ren) to append; stringlike (see `strLike()`) will be added as text nodes |
-| detach | boolean | Detach element from DOM before appending child(ren) |
+| detach | boolean | Detach node from DOM before appending child(ren) |
 
 #### `remchd (el, children, detach)`
 
-Removes one or more child elements from given element.
+Removes one or more child nodes from given node. Returns `el`.
 
 | Param | Type | Desc |
 | ----- | ---- | ---- |
-| el | Element | Element to remove child(ren) from |
+| el | Node | Node to remove child(ren) from |
 | children | array, stringlike, Node | Child(ren) to remove; stringlike will be selected by id |
-| detach | boolean | Detach element from DOM before removing child(ren) |
+| detach | boolean | Detach node from DOM before removing child(ren) |
 
 #### `clrchd (el, detach)`
 
-Removes all child elements from given element.
+Removes all child nodes from given node. Returns `el`.
 
 | Param | Type | Desc |
 | ----- | ---- | ---- |
-| el | Element | Element to remove child(ren) from |
-| detach | boolean | Detach element from DOM before removing children |
+| el | Node | Node to remove child(ren) from |
+| detach | boolean | Detach node from DOM before removing children |
 
 ## Text to node conversion
 

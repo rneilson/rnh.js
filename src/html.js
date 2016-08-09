@@ -2,7 +2,7 @@ import { isCallable, makeStr, strLike, nodeLike } from './utils.js';
 import { byid } from './select.js';
 import { setprops, addcls } from './props.js';
 
-/* HTMLElement creation, append/remove of children */
+/* HTMLElement creation, append/remove children */
 
 // Creates HTMLElement
 // Params:
@@ -49,6 +49,15 @@ function h (tag, ...args) {
 	return el;
 }
 
+// Replaces element with another
+// Params:
+// 	el			Node					Node to replace
+// 	newel		Node					Node to replace with
+function replace (el, newel) {
+	el.parentNode.replaceChild(newel, el);
+	return newel;
+}
+
 // Appends one or more child elements to given element
 // Params:
 // 	el			Node					Node to append child(ren) to
@@ -61,7 +70,7 @@ function addchd (el, children, detach) {
 	if (detach && el.parentNode !== null) {
 		// Comment node as placeholder in the DOM
 		temp = c();
-		el.parentNode.replaceChild(temp, el);
+		replace(el, temp);
 	}
 
 	// Add children
@@ -85,7 +94,7 @@ function addchd (el, children, detach) {
 
 	// Reattach if previously detached
 	if (detach && temp !== null) {
-		temp.parentNode.replaceChild(el, temp);
+		replace(temp, el);
 	}
 
 	return el;
@@ -103,7 +112,7 @@ function remchd (el, children, detach) {
 	if (detach && el.parentNode !== null) {
 		// Comment node as placeholder in the DOM
 		temp = c();
-		el.parentNode.replaceChild(temp, el);
+		replace(el, temp);
 	}
 
 	// Remove children
@@ -127,7 +136,7 @@ function remchd (el, children, detach) {
 
 	// Reattach if previously detached
 	if (detach && temp !== null) {
-		temp.parentNode.replaceChild(el, temp);
+		replace(temp, el);
 	}
 
 	return el;
@@ -144,7 +153,7 @@ function clrchd (el, detach) {
 	if (detach && el.parentNode !== null) {
 		// Comment node as placeholder in the DOM
 		temp = c();
-		el.parentNode.replaceChild(temp, el);
+		replace(el, temp);
 	}
 
 	// Clear children
@@ -154,7 +163,7 @@ function clrchd (el, detach) {
 
 	// Reattach if previously detached
 	if (detach && temp !== null) {
-		temp.parentNode.replaceChild(el, temp);
+		replace(temp, el);
 	}
 
 	return el;
@@ -342,4 +351,4 @@ function textarea (...args) {
 	return h('textarea', ...args);
 }
 
-export { h, addchd, remchd, clrchd, brklns, txt, html, t, c, br, a, p, div, span, ul, li, em, strong, img, pre, input, select, textarea };
+export { h, replace, addchd, remchd, clrchd, brklns, txt, html, t, c, br, a, p, div, span, ul, li, em, strong, img, pre, input, select, textarea };

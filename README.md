@@ -306,15 +306,15 @@ Selects elements using browser-native `getElementsByTagName()`.
 
 ## Miscellaneous utilities
 
-#### `isCallable (fn)`
-Returns `true` if `fn` is a function or function object.
-
-#### `hasProp (obj, prop)`
+#### `has (obj, prop)`
 Returns `true` if `obj` has own property `prop`.
 
-#### `strLike (s)`
+#### `makestr (s)`  
+Returns empty string if `s` is `null` or `undefined`, otherwise converts `s` to string.
+
+#### `strlike (s)`
 Returns `true` if `s` is a string, number, boolean, Date, or RegExp.
 
-#### `nodeLike (n)`
+#### `nodelike (n)`
 Returns `true` if `n` is not falsy, and has non-falsy properties `nodeName` and `nodeType`.
 

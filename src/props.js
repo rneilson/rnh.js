@@ -1,12 +1,10 @@
-import { isCallable } from './utils.js';
-
 /* Attribute/property setting */
 
 function setprops (el, props) {
 	if ('object' === typeof props) {
 		for (let p of Object.keys(props)) {
 			// Add as listener if prop value is a function
-			if (isCallable(props[p])) {
+			if (typeof props[p] === 'function') {
 				el.addEventListener(p, props[p]);
 			}
 			// Otherwise add as property/attribute/style

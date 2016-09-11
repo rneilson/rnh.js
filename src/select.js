@@ -1,12 +1,7 @@
 /* Element selector shortcuts */
 
 function sel (s, l) {
-	if (l === undefined) {
-		return document.querySelectorAll(s);
-	}
-	else {
-		return l.querySelectorAll(s);
-	}
+	return Array.from((l === undefined) ? document.querySelectorAll(s) : l.querySelectorAll(s));
 }
 
 function byid (i) {
@@ -14,21 +9,11 @@ function byid (i) {
 }
 
 function bycls (c, l) {
-	if (l === undefined) {
-		return document.getElementsByClassName(c);
-	}
-	else {
-		return l.getElementsByClassName(c);
-	}
+	return Array.from((l === undefined) ? document.getElementsByClassName(c) : l.getElementsByClassName(c));
 }
 
 function bytag (t, l) {
-	if (l === undefined) {
-		return document.getElementsByTagName(t);
-	}
-	else {
-		return l.getElementsByTagName(t);
-	}
+	return Array.from((l === undefined) ? document.getElementsByTagName(t) : l.getElementsByTagName(t));
 }
 
 export { sel, byid, bycls, bytag };

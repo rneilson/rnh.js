@@ -1,4 +1,4 @@
-import { isCallable, makeStr, strLike, nodeLike } from './utils.js';
+import { makestr, strlike, nodelike } from './utils.js';
 import { byid } from './select.js';
 import { setprops, addcls } from './props.js';
 
@@ -37,7 +37,7 @@ function h (tag, ...args) {
 			}
 		}
 		// Add children
-		else if (Array.isArray(arg) || nodeLike(arg)) {
+		else if (Array.isArray(arg) || nodelike(arg)) {
 			addchd(el, arg);
 		}
 		// Add properties/listeners
@@ -79,18 +79,18 @@ function addchd (el, children, detach) {
 	if (Array.isArray(children)) {
 		for (let i = 0, len_i = children.length; i < len_i; i++) {
 			let child = children[i];
-			if (strLike(child)) {
+			if (strlike(child)) {
 				el.appendChild(t(child));
 			}
-			else if (nodeLike(child)) {
+			else if (nodelike(child)) {
 				el.appendChild(child);
 			}
 		}
 	}
-	else if (nodeLike(children)) {
+	else if (nodelike(children)) {
 		el.appendChild(children);
 	}
-	else if (strLike(children)) {
+	else if (strlike(children)) {
 		el.appendChild(t(children));
 	}
 
@@ -121,18 +121,18 @@ function remchd (el, children, detach) {
 	if (Array.isArray(children)) {
 		for (let i = 0, len_i = children.length; i < len_i; i++) {
 			let child = children[i];
-			if (strLike(child)) {
+			if (strlike(child)) {
 				el.removeChild(byid(child));
 			}
-			else if (nodeLike(child)) {
+			else if (nodelike(child)) {
 				el.removeChild(child);
 			}
 		}
 	}
-	else if (nodeLike(children)) {
+	else if (nodelike(children)) {
 		el.removeChild(children);
 	}
-	else if (strLike(children)) {
+	else if (strlike(children)) {
 		el.removeChild(byid(children));
 	}
 
@@ -178,7 +178,7 @@ function clrchd (el, detach) {
 // 	str			string				String to parse
 function brklns (str) {
 	var ret = [];
-	var arr = makeStr(str).split('\n');
+	var arr = makestr(str).split('\n');
 	if (arr.length > 0) {
 		// Add first text node
 		ret.push(t(arr[0]));
@@ -201,13 +201,13 @@ function txt (strings, ...inserts) {
 		// Alternate inserts and additional text nodes
 		for (var i = 1; i < strings.length; i++) {
 			let insert = inserts[i-1];
-			if (nodeLike(insert)) {
+			if (nodelike(insert)) {
 				ret.push(insert);
 			}
-			else if (isCallable(insert)) {
+			else if (typeof insert === 'function') {
 				ret.push(insert());
 			}
-			else if (strLike(insert)) {
+			else if (strlike(insert)) {
 				ret.push(...brklns(insert));
 			}
 			else {
@@ -226,7 +226,7 @@ function html (strings, ...inserts) {
 
 	// Converts insert arg to string
 	function parse (insert) {
-		if (nodeLike(insert)) {
+		if (nodelike(insert)) {
 			// Return as HTML if available
 			if (insert.outerHTML) {
 				return insert.outerHTML;
@@ -243,10 +243,10 @@ function html (strings, ...inserts) {
 			// Default to empty string
 			return '';
 		}
-		else if (isCallable(insert)) {
+		else if (typeof insert === 'function') {
 			return parse(insert());
 		}
-		else if (strLike(insert)) {
+		else if (strlike(insert)) {
 			return insert;
 		}
 		else {
@@ -286,14 +286,14 @@ function html (strings, ...inserts) {
 // Params:
 // 	str			stringish			Content of text node to create
 function t (str) {
-	return document.createTextNode(makeStr(str));
+	return document.createTextNode(makestr(str));
 }
 
 // Creates comment element
 // Params:
 // 	str			stringish			Content of comment node to create
 function c (str) {
-	return document.createComment(makeStr(str));
+	return document.createComment(makestr(str));
 }
 
 // Creates <br> element

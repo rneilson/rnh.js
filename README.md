@@ -214,13 +214,14 @@ var arr = rnh.txt`This is a ${str}, which will be converted\nto an array of DOM 
 
 #### `html (strings, ...inserts)`
 
-Converts/splits template string into array of elements/nodes, including converting HTML where applicable. Inserted expressions will be called if a function, inserted according to outerHTML property if a node, or converted to text otherwise. Please note that this function is for use with template strings instead of direct calls. Also note that all inserted expressions are converted to text form during processing, which is inefficient when inserting HTMLElement objects directly.
+Converts/splits template string into array of elements/nodes, including converting HTML where applicable. Inserted expressions will be called if a function, inserted according to outerHTML property if a node, or converted to text otherwise. Please note that this function is for use with template strings instead of direct calls. Existing nodelike objects given in the template string using `${insert}` syntax will be placed directly into the final DOM without further conversion. Also, please note that whitespace within strings is not converted using `brklns()`, and thus newlines, tabs, and multiple spaces will be output as-is.
 ```javascript
 var str = 'string';
-var arr = rnh.html`This is a <span>${str}</span>, which will be converted<br>to an array of DOM nodes.`;
-// Result:		[ text, span, text, br, text ]
-// Contents:	[ 'This is a ', '<span>string</span>', ', which will be converted', <br>, 'to an array of DOM nodes.' ]
-// (Please note the strings above represent elements or text nodes, not strings.)
+var span = rnh.span({id: 'test'}, ['DOM nodes']);
+var arr = rnh.html`This is a <span>${str}</span>, which will be converted<br>to an array of ${span}.`;
+// Result:		[ text, span, text, br, text, span, text ]
+// Contents:	[ "This is a ", <span>string</span>, ", which will be converted", <br>, "to an array of ", <span id="test">DOM nodes.</span>, "." ]
+// (Please note the strings above represent elements or text nodes, not Javascript strings.)
 ```
 
 ## Element property/attribute manipulation

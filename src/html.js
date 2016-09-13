@@ -1,5 +1,5 @@
 import { makestr, strlike, nodelike } from './utils.js';
-import { byid } from './select.js';
+import { byid, sel } from './select.js';
 import { setprops, addcls } from './props.js';
 
 /* HTMLElement creation, append/remove children */
@@ -192,31 +192,43 @@ function brklns (str) {
 }
 
 // Converts/splits template string into array of elements, including converting \n to <br>
-// Inserted expressions will be called if a function, inserted directly if a node, or converted to text otherwise
+// Inserted expressions will be called if a function, inserted directly if a node,
+// spread and inserted if an array, or converted to text otherwise
 function txt (strings, ...inserts) {
-	var ret = [];
+
+	let ret = [];
 	if (strings.length > 0) {
 		// Add first text node
 		ret.push(...brklns(strings[0]));
 		// Alternate inserts and additional text nodes
-		for (var i = 1; i < strings.length; i++) {
+		for (let i = 1; i < strings.length; i++) {
 			let insert = inserts[i-1];
-			if (nodelike(insert)) {
-				ret.push(insert);
-			}
-			else if (typeof insert === 'function') {
-				ret.push(insert());
-			}
-			else if (strlike(insert)) {
-				ret.push(...brklns(insert));
-			}
-			else {
-				ret.push(t(String(insert)));
-			}
+			push(insert);
+			// Now add insert(s)
 			ret.push(...brklns(strings[i]));
 		}
 	}
 	return ret;
+
+	function push (insert) {
+		// First call function if present and use results
+		if (typeof insert === 'function') {
+			insert = insert();
+		}
+		// Now convert and push to ret
+		if (Array.isArray(insert)) {
+			insert.forEach(push);
+		}
+		else if (nodelike(insert)) {
+			ret.push(insert);
+		}
+		else if (strlike(insert)) {
+			ret.push(...brklns(insert));
+		}
+		else {
+			ret.push(t(String(insert)));
+		}
+	}
 }
 
 // Converts HTML (in string template form) into array of nodes
@@ -224,38 +236,9 @@ function txt (strings, ...inserts) {
 // NOTE: elements received as insert args are converted to text during processing
 function html (strings, ...inserts) {
 
-	// Converts insert arg to string
-	function parse (insert) {
-		if (nodelike(insert)) {
-			// Return as HTML if available
-			if (insert.outerHTML) {
-				return insert.outerHTML;
-			}
-			// Return raw text if text node
-			else if (insert.nodeType == 3) {
-				return insert.textContent;
-			}
-			// Return commented text if comment node
-			else if (insert.nodeType == 8) {
-				return `<!--${insert.textContent}-->`;
-			}
-			// TODO: handle DocumentFragment nodes (recursive calls on children?)
-			// Default to empty string
-			return '';
-		}
-		else if (typeof insert === 'function') {
-			return parse(insert());
-		}
-		else if (strlike(insert)) {
-			return insert;
-		}
-		else {
-			return String(insert);
-		}
-	}
-
 	// Convert all to concatenated HTML string
-	var str = '';
+	let str = '';
+	let swap = [];
 	if (strings.length > 0) {
 		// Add first text node
 		str += strings[0];
@@ -268,16 +251,52 @@ function html (strings, ...inserts) {
 	}
 
 	// Create temp div and set HTML string to innerHTML
-	var tmp = h('div');
+	let tmp = h('div');
 	tmp.innerHTML = str;
 
+	// Swap in nodelike inserts
+	let toswap = sel('span[data-rnh-html]', tmp);
+	toswap.forEach(el => replace(el, swap[el.getAttribute('data-rnh-html')]));
+
 	// Return temp div children as array
-	var ret = [];
+	let ret = [];
 	for (let j = 0, chd = tmp.childNodes; j < chd.length; j++) {
 		ret.push(chd[j]);
 	}
 
 	return ret;
+
+	// Converts insert arg to string
+	function parse (insert) {
+		// First call function if present and use results
+		if (typeof insert === 'function') {
+			insert = insert();
+		}
+		if (Array.isArray(insert)) {
+			return insert.map(parse).join('');
+		}
+		if (nodelike(insert)) {
+			// Return raw text if text node
+			if (insert.nodeType == 3) {
+				return insert.textContent;
+			}
+			// Return commented text if comment node
+			else if (insert.nodeType == 8) {
+				return `<!--${insert.textContent}-->`;
+			}
+			// Push to swap array, write temp span
+			else {
+				let idx = swap.push(insert) - 1;
+				return `<span data-rnh-html="${idx}"></span>`;
+			}
+		}
+		else if (strlike(insert)) {
+			return insert;
+		}
+		else {
+			return String(insert);
+		}
+	}
 }
 
 /* Common shortcuts */

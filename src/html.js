@@ -11,7 +11,7 @@ import { setprops, addcls } from './props.js';
 // 	classes		string				Class or class list to set on element (multiple args will be concantenated)
 // 	props		object				Properties to set on element; functions will be added as event listeners	 
 // 	children	array, element		Child nodes to insert; argument passed to addchd()
-function h (tag, ...args) {
+function cr (tag, args) {
 	var el;
 
 	// Create element
@@ -251,7 +251,7 @@ function html (strings, ...inserts) {
 	}
 
 	// Create temp div and set HTML string to innerHTML
-	let tmp = h('div');
+	let tmp = cr('div', []);
 	tmp.innerHTML = str;
 
 	// Swap in nodelike inserts
@@ -320,56 +320,4 @@ function br () {
 	return document.createElement('br');
 }
 
-function a (...args) {
-	return h('a', ...args);
-}
-
-function p (...args) {
-	return h('p', ...args);
-}
-
-function div (...args) {
-	return h('div', ...args);
-}
-
-function span (...args) {
-	return h('span', ...args);
-}
-
-function ul (...args) {
-	return h('ul', ...args);
-}
-
-function li (...args) {
-	return h('li', ...args);
-}
-
-function em (...args) {
-	return h('em', ...args);
-}
-
-function strong (...args) {
-	return h('strong', ...args);
-}
-
-function img (...args) {
-	return h('img', ...args);
-}
-
-function pre (...args) {
-	return h('pre', ...args);
-}
-
-function input (...args) {
-	return h('input', ...args);
-}
-
-function select (...args) {
-	return h('select', ...args);
-}
-
-function textarea (...args) {
-	return h('textarea', ...args);
-}
-
-export { h, replace, addchd, remchd, clrchd, brklns, txt, html, t, c, br, a, p, div, span, ul, li, em, strong, img, pre, input, select, textarea };
+export { cr, replace, addchd, remchd, clrchd, brklns, txt, html, t, c, br };

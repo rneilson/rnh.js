@@ -1,7 +1,25 @@
 // Utility functions
 
 export function has (obj, prop) {
-	return Object.prototype.hasOwnProperty.call(obj, prop);
+	if (typeof prop === 'string') {
+		prop = prop.split('.');
+	}
+	else if (!Array.isArray(prop)) {
+		prop = [prop];
+	}
+	var i;
+	for (i = 0; i < prop.length - 1; i++) {
+		if (obj === null || obj === undefined) {
+			return false;
+		}
+		let p = prop[i];
+		let o = Object(obj);
+		if (!Object.prototype.hasOwnProperty.call(o, p)) {
+			return false;
+		}
+		obj = o[p];
+	}
+	return obj !== null && obj !== undefined && Object.prototype.hasOwnProperty.call(obj, prop[i]);
 }
 
 export function makestr (s) {

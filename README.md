@@ -272,7 +272,7 @@ Multiple classes in single string (eg `'green big'`) will be split on spaces whe
 
 #### `sel (s, l)`
 
-Selects elements using browser-native `querySelectorAll()`.
+Selects elements using browser-native `querySelectorAll()`. Returns array of results.
 
 | Param | Type | Desc |
 | ----- | ---- | ---- |
@@ -281,7 +281,7 @@ Selects elements using browser-native `querySelectorAll()`.
 
 #### `byid (i)`
 
-Selects elements using browser-native `getElementById()`.
+Selects elements using browser-native `getElementById()`. Returns array of results.
 
 | Param | Type | Desc |
 | ----- | ---- | ---- |
@@ -289,7 +289,7 @@ Selects elements using browser-native `getElementById()`.
 
 #### `bycls (c, l)`
 
-Selects elements using browser-native `getElementsByClassName()`.
+Selects elements using browser-native `getElementsByClassName()`. Returns array of results.
 
 | Param | Type | Desc |
 | ----- | ---- | ---- |
@@ -298,7 +298,7 @@ Selects elements using browser-native `getElementsByClassName()`.
 
 #### `bytag (t, l)`
 
-Selects elements using browser-native `getElementsByTagName()`.
+Selects elements using browser-native `getElementsByTagName()`. Returns array of results.
 
 | Param | Type | Desc |
 | ----- | ---- | ---- |

@@ -308,7 +308,13 @@ Selects elements using browser-native `getElementsByTagName()`.
 ## Miscellaneous utilities
 
 #### `has (obj, prop)`
-Returns `true` if `obj` has own property `prop`.
+
+Returns `true` if `obj` has own property or path of own properties `prop`. `prop` may be a string, a number, a symbol, or an array or '.'-delimited string of valid property names (eg `a.b`, `0.1`, `0.length`, [0, 1], [0, 'length'], etc.).
+
+| Param | Type | Desc |
+| ----- | ---- | ---- |
+| obj | any | value to check |
+| prop | array, string, number | property to check |
 
 #### `makestr (s)`  
 Returns empty string if `s` is `null` or `undefined`, otherwise converts `s` to string.

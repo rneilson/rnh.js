@@ -17,5 +17,5 @@ export function strlike (s) {
 }
 
 export function nodelike (n) {
-	return !!(n && n.nodeName && n.nodeType);
+	return (n && n.nodeName && n.nodeType);
 }

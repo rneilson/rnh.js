@@ -1,6 +1,6 @@
 {
   "name": "rnh",
-  "version": "0.1.2",
+  "version": "0.2.0",
   "description": "Hyperscript-like HTMLElement creation, selection, and manipulation",
   "main": "dist/rnh.cjs.js",
   "jsnext:main": "dist/rnh.js",
